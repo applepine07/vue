@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery-輸入改變</title>
+
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+
+    <div>
+        <div>我的名字:jquery輸入後滑鼠移開就會變</div>
+    </div>
+    <input type="text" name="myname" id="myname" value="mack">
+    <h1 id="text">mack</h1>
+    <hr>
+    <script>
+        // ↓輸入後滑鼠移開就會變
+        $("#myname").on("change", () => {
+            let name = $('#myname').val();
+            $("#text").text(name);
+        })
+        // ↓邊輸入邊變
+        // $("#myname").on("input", () => {
+        //     let name = $('#myname').val();
+        //     $("#text").text(name);
+        // })
+        // ↑jquery
+    </script>
+</body>
+
+</html>

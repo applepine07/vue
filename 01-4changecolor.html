@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue變顏色</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <style>
+        .bg1 {
+            background-color: turquoise;
+        }
+        .bg2 {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue@3"></script>
+
+    <div id="app">
+        <div v-for="name,id in names" :key="id">
+            <li :class="bg" @mouseover="changeBG" @mouseout="defaultBG">{{id}}.{{ name }}</li>
+        </div>
+    </div>
+
+    <script>
+        const settings = {
+            data() {
+                let names = ["小西", "小東", "小南", "小北", "一一",
+                    "二二", "三三", "四四", "五五",
+                    "六六", "七七", "八八", "九九", "十十",
+                    "花花", "狗狗", "貓貓", "熊熊",
+                    "兔兔", "車車", "草草", "嘿嘿"
+                ];
+                let count = 0;
+                let bg = 'bg1';
+                return {
+                    names, count, bg
+                }
+            },
+            methods: {
+                changeBG() {
+                    this.bg = 'bg2';
+                },
+                defaultBG() {
+                    this.bg = 'bg1';
+                }
+            }
+        }
+        Vue.createApp(settings).mount('#app')
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo工作項目-學生</title>
+    <style>
+
+    </style>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>To Do List</h1>
+        <label for="textfiled">請輸入待辦事項內容:</label>
+        <input type="text" id="textfield" @keyup.enter="addContext" v-model="context">
+        <hr>
+        <h3>待辦事項列表</h3>
+        <div>目前共有工作項目{{count}}項</div>
+        <!-- 如果有待辦事項 -->
+        <ul v-if="list.length>0">
+            <!-- 用v-for秀出來 -->
+            <li v-for="item,idx in list" :key="idx">{{item}}
+                <button @click="editItem(idx)">edit</button>
+                <button @click="delItem(idx)">X</button>
+            </li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <script>
+
+        // js設定的各種內容
+        let set = {
+            data() {
+                let list = new Array();
+                let context = '';
+                let count = 0;
+                // ↓記得這邊千萬要丟出來，外面的函式才能用
+                return { list, context, count }
+            },
+            // 和data一樣，是個方法，一個mounted方法
+            // mounted時取出localstorage的東西
+            mounted() {
+                if (localStorage.length > 0) {
+                    for (let i = 0; i < localStorage.length; i++) {
+                        // 有localstorage(舊存檔)時，就放到陣列，這樣關掉瀏覽器仍有過去紀錄
+                        this.list.push(localStorage.getItem(i));
+                    }
+                    // 數陣列長度放到count，顯示在前台給人看有多少工作項目
+                    this.count = localStorage.length;
+                }
+            },
+            // 如果不加watch,我們就要在增加，刪除和修改的函式中去增加updatestorage（）
+            watch:{
+                list:{
+                    handler(newList,oldList){
+                        this.updateStorage()
+                    },
+                    // ↓這個是老師試了好久加上去才終於可以work的，deep
+                    // deep:當欲觀察值的特性為 call by reference，例如 Object 時，需將 deep 值設定為 true，告知 watch 需要深度觀察。否則會因為特性關係，無法觸發監聽器。
+                    deep:true,
+                }
+            },
+
+            methods: {
+                addContext() {
+                    // console.log("enter");
+                    if (this.context.length > 0) {
+                        this.list.push(this.context);
+                        this.context = '';
+                        // 有動到資料的都要更新count
+                        this.count = this.list.length;
+                    }
+                },
+                delItem(idx) {
+                    // 直接刪資料，不是刪dom元素
+                    this.list.splice(idx, 1);
+                        // 有動到資料的都要更新count
+                    this.count = this.list.length;
+                },
+                editItem(idx) {
+                    let text = prompt('請輸入你要修改的項目描述', this.list[idx]);
+                    if (text != null && text.length > 0) {
+                        this.list[idx] = text;
+                    }
+                },
+                updateStorage() {
+                    // 要先清空再存/更新webstorage，不然會舊+新一直加
+                    localStorage.clear();
+                    // 將陣列的資料一個個存到webstorage
+                    for (let i = 0; i < this.list.length; i++) {
+                        localStorage.setItem(i, this.list[i]);
+                    }
+                }
+            }
+        }
+        Vue.createApp(set).mount('#app');
+    </script>
+</body>
+
+</html>

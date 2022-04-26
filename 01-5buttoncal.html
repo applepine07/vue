@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VUE-button-calculate</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue@3"></script>
+    <div id="app">
+        <button @click="plus">{{ count }}</button>
+    </div>
+
+    <script>
+        const settings = {
+            data() {
+                let count = 0;
+                return {
+                    count,
+                }
+            },
+            methods: {
+                add() {
+                    this.count = this.count + 1;
+                },
+                plus() {
+                    this.count = (this.count + 1) * (this.count + 1)
+                },
+            }
+        }
+        Vue.createApp(settings).mount('#app')
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue實作</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <!-- View，接收 -->
+    <div id="app">
+        <div v-for="name,id in names" :key="id">
+            <li v-if="id%2==0">{{id}} {{ name }}</li>
+        </div>
+        <hr>
+        <div v-for="name,id in names" :key="id">
+            <li v-show="id%2==0">{{id}} {{ name }}</li>
+        </div>
+    </div>
+    <script>
+        const settings = {
+            // data是一個屬性
+            data() {
+                // ↑在data裡可寫其它的function去控制它
+                // 在return以外做的事情，全部都叫controller
+                let names = ["貓貓", "狗狗", "小雞", "小熊", "panda", "鮭魚"];
+                // return是VM
+                return {
+                    // M，資料↓↓↓
+                    names,
+                }
+            },
+            // method也是一個物件，裡面我們可以宣告方法，用逗號隔開
+            methods: {
+            }
+        }
+        Vue.createApp(settings).mount('#app');
+        // #app實驗過只能用id，不能用class，用了只有第一個有效
+        // 把產生的app掛在畫面上叫做mount
+        // console.log(Vue);
+    </script>
+</body>
+
+</html>

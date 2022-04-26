@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo工作項目</title>
+    <style>
+
+    </style>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        referrerpolicy="no-referrer"></script>
+</head>
+
+<body>  
+    <div id="aa"></div>
+    <script>
+        // 這個aa是全域變數( ･`ω･´)
+        let aa=new Array('a','b','c','d');
+        let chk=setInterval(()=>{
+            makelist(aa);
+        },1000)
+
+        // splice的用法
+        aa.splice(aa.indexOf("b"),1);
+
+        makelist(aa);
+        function makelist(aa){
+            $("#aa").html("");
+            aa.forEach(item=>{
+                $("#aa").append(`<div>${item}</div>`);
+            })
+        }
+    </script>
+</body>
+
+</html>
